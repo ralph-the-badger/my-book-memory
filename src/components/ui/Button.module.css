@@ -1,0 +1,27 @@
+.btn {
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: inherit;
+}
+
+.primary {
+  color: var(--color-main-black);
+  background-color: var(--color-main);
+}
+
+.primary:hover,
+.primary:focus {
+  background-color: var(--color-main-light);
+}
+
+.secondary {
+  color: var(--color-main-black);
+  background-color: var(--color-main-light);
+}
+
+.secondary:hover,
+.secondary:focus {
+  background-color: var(--color-main-lighter);
+}

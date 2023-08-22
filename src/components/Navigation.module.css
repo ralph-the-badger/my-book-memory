@@ -1,0 +1,30 @@
+.navigation {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 5rem;
+  background: linear-gradient(rgba(36, 42, 46, 0.75), rgba(36, 42, 46, 0.75));
+}
+
+.navigation ul {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+  list-style-type: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.navigation li {
+  color: var(--color-main-white);
+}
+
+.navigation img {
+  height: 4rem;
+  color: var(--color-white);
+}
+
+.navigation ul button {
+  padding: 0.75rem 1.25rem;
+}
