@@ -17,7 +17,7 @@ function Navigation() {
         <Button type="primary" onClick={() => navigate("/login")}>
           Login
         </Button>
-        <Button type="secondary" onClick={() => navigate("/sign-in")}>
+        <Button type="secondary" onClick={() => navigate("/register")}>
           Registrieren
         </Button>
       </ul>

@@ -56,3 +56,29 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
+.errorContainer {
+  background-color: var(--color-dark-red);
+  border-radius: 10px;
+}
+
+.errorContainer ul {
+  list-style-type: none;
+}
+
+.errorContainer ul li {
+  color: var(--color-main-white);
+  text-align: left;
+  padding: 1rem;
+}
+
+.successContainer {
+  background-color: var(--color-dark-green);
+  border-radius: 10px;
+}
+
+.successContainer p {
+  color: var(--color-main-white);
+  text-align: left;
+  padding: 1rem;
+}

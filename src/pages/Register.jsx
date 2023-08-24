@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 import { useNavigate } from "react-router-dom";
 
@@ -10,14 +11,54 @@ import styles from "./Register.module.css";
 function Register() {
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState([]);
+  const [success, setSuccess] = useState(null);
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!username) throw new Error("Bitte geben Sie einen Benutzernamen an!");
-    if (!password) throw new Error("Bitte geben Sie ein Passwort an!");
-    console.log(username, password);
+    if (!name) setError(["Bitte geben Sie einen Benutzernamen an!"]);
+    if (!email) setError(["Bitte geben Sie eine E-Mail-Adresse an!"]);
+    if (!password) setError(["Bitte geben Sie ein Passwort an!"]);
+    const user = {
+      name,
+      email,
+      password,
+    };
+    registerUser(user);
+  }
+
+  async function registerUser(user) {
+    try {
+      const response = await axios({
+        method: "POST",
+        url: "http://localhost:5000/register",
+        data: user,
+      });
+      await response.json;
+      setError([]);
+      setSuccess(
+        "Danke für Ihre Registrierung. Sie werden zum Login weitergeleitet."
+      );
+      setName("");
+      setEmail("");
+      setPassword("");
+      setTimeout(() => navigate("/login"), 2500);
+    } catch (error) {
+      let errorArray;
+      const errorString = error.response.data;
+      if (errorString.length > 1) {
+        errorArray = errorString;
+      } else {
+        errorArray = [errorString];
+      }
+      setError(errorArray);
+      setName("");
+      setEmail("");
+      setPassword("");
+    }
   }
 
   return (
@@ -26,15 +67,26 @@ function Register() {
       <section>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.inputRow}>
-            <label htmlFor="username">Benutzername</label>
+            <label htmlFor="name">Benutzername</label>
             <input
-              id="username"
+              id="name"
               type="name"
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
             />
-            <span className={styles.registerInfo}>
+            {/* <span className={styles.registerInfo}>
               Bitte wählen Sie einen Benutzernamen ohne Leerzeichen
-            </span>
+            </span> */}
+          </div>
+          <div className={styles.inputRow}>
+            <label htmlFor="email">E-Mail</label>
+            <input
+              id="email"
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            {/* <span className={styles.registerInfo}>
+              Bitte geben Sie eine validate E-Mail-Adresse an
+            </span> */}
           </div>
           <div className={styles.inputRow}>
             <label htmlFor="password">Passwort</label>
@@ -43,10 +95,24 @@ function Register() {
               type="password"
               onChange={(e) => setPassword(e.target.value)}
             />
-            <span className={styles.registerInfo}>
+            {/* <span className={styles.registerInfo}>
               Bitte wählen Sie ein sicheres Passwort
-            </span>
+            </span> */}
           </div>
+          {error && (
+            <div className={styles.errorContainer}>
+              <ul>
+                {error.map((err, i) => (
+                  <li key={i}>{err}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {success !== null && (
+            <div className={styles.successContainer}>
+              <p>{success}</p>
+            </div>
+          )}
           <div className={styles.buttonRow}>
             <Button type="secondary" onClick={() => navigate("/")}>
               zurück
