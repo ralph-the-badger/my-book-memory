@@ -37,6 +37,9 @@ function Register() {
         url: "http://localhost:5000/register",
         data: user,
       });
+      const returnedUser = response.data;
+      console.log(returnedUser);
+
       await response.json;
       setError([]);
       setSuccess(
@@ -45,7 +48,7 @@ function Register() {
       setName("");
       setEmail("");
       setPassword("");
-      setTimeout(() => navigate("/login"), 2500);
+      // setTimeout(() => navigate("/login"), 2500);
     } catch (error) {
       let errorArray;
       const errorString = error.response.data;

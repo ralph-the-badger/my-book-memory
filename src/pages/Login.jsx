@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 import axios from "axios";
 
 import Navigation from "../components/Navigation";
@@ -8,6 +9,7 @@ import Button from "../components/ui/Button";
 import styles from "./Login.module.css";
 
 function Login() {
+  const { isAuthenticated, loginAuth } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -30,28 +32,40 @@ function Login() {
         url: "http://localhost:5000/login",
         data: user,
       });
-      console.log({ response });
-      await response.json;
+      const returnedUser = await response.data;
+      await loginAuth(returnedUser.token);
+
+      // await response.json;
       setError([]);
       setSuccess(
         "Die Anmeldung war erfolgreich. Sie werden in Kürze weitergeleitet."
       );
       setEmail("");
       setPassword("");
-      setTimeout(() => navigate("/user"), 2500);
+      // setTimeout(() => navigate("/user"), 2500);
     } catch (e) {
-      let errorArray;
-      const errorString = error.response.data;
-      if (errorString.length > 1) {
-        errorArray = errorString;
-      } else {
-        errorArray = [errorString];
+      if (e) {
+        console.log(e);
       }
-      setError(errorArray);
+      if (error) {
+        let errorArray;
+        const errorString = error.response.data;
+        if (errorString.length > 1) {
+          errorArray = errorString;
+        } else {
+          errorArray = [errorString];
+        }
+        setError(errorArray);
+      }
       setEmail("");
       setPassword("");
     }
   }
+
+  useEffect(() => {
+    console.log(isAuthenticated);
+    if (isAuthenticated) navigate("/books", { replace: true });
+  }, [isAuthenticated, navigate]);
 
   return (
     <main className={styles.login}>
