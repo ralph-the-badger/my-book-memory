@@ -28,3 +28,7 @@
 .navigation ul button {
   padding: 0.75rem 1.25rem;
 }
+
+.welcome {
+  color: var(--color-main-white);
+}

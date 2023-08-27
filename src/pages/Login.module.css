@@ -32,6 +32,13 @@
   border-radius: 10px;
 }
 
+.loginHeading {
+  color: var(--color-main-white);
+  text-align: center;
+  font-size: 1.5rem;
+  line-height: 1.6875rem;
+}
+
 .inputRow {
   display: flex;
   flex-direction: column;

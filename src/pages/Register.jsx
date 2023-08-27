@@ -1,5 +1,7 @@
+// import axios from "axios";
 import { useState } from "react";
-import axios from "axios";
+
+import { useRegister } from "../hooks/useRegister";
 
 import { useNavigate } from "react-router-dom";
 
@@ -14,67 +16,78 @@ function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState([]);
-  const [success, setSuccess] = useState(null);
+  const { register, isLoading, error, success } = useRegister();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    if (!name) setError(["Bitte geben Sie einen Benutzernamen an!"]);
-    if (!email) setError(["Bitte geben Sie eine E-Mail-Adresse an!"]);
-    if (!password) setError(["Bitte geben Sie ein Passwort an!"]);
     const user = {
       name,
       email,
       password,
     };
-    registerUser(user);
+    await register(user);
   }
 
-  async function registerUser(user) {
-    try {
-      const response = await axios({
-        method: "POST",
-        url: "http://localhost:5000/register",
-        data: user,
-      });
-      const returnedUser = response.data;
-      console.log(returnedUser);
+  // async function handleSubmit(e) {
+  //   e.preventDefault();
+  //   if (!name) setError(["Bitte geben Sie einen Benutzernamen an!"]);
+  //   if (!email) setError(["Bitte geben Sie eine E-Mail-Adresse an!"]);
+  //   if (!password) setError(["Bitte geben Sie ein Passwort an!"]);
+  //   const user = {
+  //     name,
+  //     email,
+  //     password,
+  //   };
+  //   await registerUser(user);
+  // }
 
-      await response.json;
-      setError([]);
-      setSuccess(
-        "Danke für Ihre Registrierung. Sie werden zum Login weitergeleitet."
-      );
-      setName("");
-      setEmail("");
-      setPassword("");
-      // setTimeout(() => navigate("/login"), 2500);
-    } catch (error) {
-      let errorArray;
-      const errorString = error.response.data;
-      if (errorString.length > 1) {
-        errorArray = errorString;
-      } else {
-        errorArray = [errorString];
-      }
-      setError(errorArray);
-      setName("");
-      setEmail("");
-      setPassword("");
-    }
-  }
+  // async function registerUser(user) {
+  //   try {
+  //     const response = await axios({
+  //       method: "POST",
+  //       url: "http://localhost:5000/register",
+  //       data: user,
+  //     });
+  //     const returnedUser = response.data;
+  //     console.log(returnedUser);
+
+  //     await response.json;
+  //     setError([]);
+  //     setSuccess(
+  //       "Danke für Ihre Registrierung. Sie werden zum Login weitergeleitet."
+  //     );
+  //     setName("");
+  //     setEmail("");
+  //     setPassword("");
+  //     // setTimeout(() => navigate("/login"), 2500);
+  //   } catch (error) {
+  //     let errorArray;
+  //     const errorString = error.response.data;
+  //     if (errorString.length > 1) {
+  //       errorArray = errorString;
+  //     } else {
+  //       errorArray = [errorString];
+  //     }
+  //     setError(errorArray);
+  //     setName("");
+  //     setEmail("");
+  //     setPassword("");
+  //   }
+  // }
 
   return (
     <main className={styles.register}>
       <Navigation />
       <section>
         <form className={styles.form} onSubmit={handleSubmit}>
+          <h3 className={styles.registerHeading}>Registrieren</h3>
           <div className={styles.inputRow}>
             <label htmlFor="name">Benutzername</label>
             <input
               id="name"
               type="name"
               onChange={(e) => setName(e.target.value)}
+              value={name}
             />
             {/* <span className={styles.registerInfo}>
               Bitte wählen Sie einen Benutzernamen ohne Leerzeichen
@@ -86,6 +99,7 @@ function Register() {
               id="email"
               type="email"
               onChange={(e) => setEmail(e.target.value)}
+              value={email}
             />
             {/* <span className={styles.registerInfo}>
               Bitte geben Sie eine validate E-Mail-Adresse an
@@ -97,6 +111,7 @@ function Register() {
               id="password"
               type="password"
               onChange={(e) => setPassword(e.target.value)}
+              value={password}
             />
             {/* <span className={styles.registerInfo}>
               Bitte wählen Sie ein sicheres Passwort
@@ -117,10 +132,16 @@ function Register() {
             </div>
           )}
           <div className={styles.buttonRow}>
-            <Button type="secondary" onClick={() => navigate("/")}>
+            <Button
+              disabled={isLoading}
+              type="secondary"
+              onClick={() => navigate("/")}
+            >
               zurück
             </Button>
-            <Button type="primary">Registrieren</Button>
+            <Button disabled={isLoading} type="primary">
+              Registrieren
+            </Button>
           </div>
         </form>
       </section>

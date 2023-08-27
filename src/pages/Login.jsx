@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+
+import { useLogin } from "../hooks/useLogin";
+
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/authContext";
-import axios from "axios";
 
 import Navigation from "../components/Navigation";
 import Button from "../components/ui/Button";
@@ -9,75 +10,86 @@ import Button from "../components/ui/Button";
 import styles from "./Login.module.css";
 
 function Login() {
-  const { isAuthenticated, loginAuth } = useAuth();
+  // const { isAuthenticated, loginAuth } = useAuth();
   const navigate = useNavigate();
+
+  const { login, isLoading, error, success } = useLogin();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState([]);
-  const [success, setSuccess] = useState(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (!email) setError(["Bitte geben Sie eine E-Mail-Adresse an!"]);
-    if (!password) setError(["Bitte geben Sie ein Passwort an!"]);
-    const user = { email, password };
-    loginUser(user);
+    const user = {
+      email,
+      password,
+    };
+    await login(user);
   }
 
-  async function loginUser(user) {
-    try {
-      const response = await axios({
-        method: "POST",
-        url: "http://localhost:5000/login",
-        data: user,
-      });
-      const returnedUser = await response.data;
-      await loginAuth(returnedUser.token);
+  // async function handleSubmit(e) {
+  //   e.preventDefault();
+  //   if (!email) setError(["Bitte geben Sie eine E-Mail-Adresse an!"]);
+  //   if (!password) setError(["Bitte geben Sie ein Passwort an!"]);
+  //   const user = { email, password };
+  //   await loginUser(user);
+  // }
 
-      // await response.json;
-      setError([]);
-      setSuccess(
-        "Die Anmeldung war erfolgreich. Sie werden in Kürze weitergeleitet."
-      );
-      setEmail("");
-      setPassword("");
-      // setTimeout(() => navigate("/user"), 2500);
-    } catch (e) {
-      if (e) {
-        console.log(e);
-      }
-      if (error) {
-        let errorArray;
-        const errorString = error.response.data;
-        if (errorString.length > 1) {
-          errorArray = errorString;
-        } else {
-          errorArray = [errorString];
-        }
-        setError(errorArray);
-      }
-      setEmail("");
-      setPassword("");
-    }
-  }
+  // async function loginUser(user) {
+  //   try {
+  //     const response = await axios({
+  //       method: "POST",
+  //       url: "http://localhost:5000/login",
+  //       data: user,
+  //     });
 
-  useEffect(() => {
-    console.log(isAuthenticated);
-    if (isAuthenticated) navigate("/books", { replace: true });
-  }, [isAuthenticated, navigate]);
+  //     const returnedUser = await response.data;
+  //     await loginAuth(returnedUser);
+  //     await localStorage.setItem("userData", JSON.stringify(returnedUser));
+
+  //     // await response.json;
+  //     setError([]);
+  //     setSuccess(
+  //       "Die Anmeldung war erfolgreich. Sie werden in Kürze weitergeleitet."
+  //     );
+  //     setEmail("");
+  //     setPassword("");
+  //     // setTimeout(() => navigate("/user"), 2500);
+  //   } catch (e) {
+  //     if (e) {
+  //       return setError([e.response.data[0]]);
+  //     }
+  //     if (error) {
+  //       let errorArray;
+  //       const errorString = error.response.data;
+  //       if (errorString.length > 1) {
+  //         errorArray = errorString;
+  //       } else {
+  //         errorArray = [errorString];
+  //       }
+  //       return setError(errorArray);
+  //     }
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   console.log(isAuthenticated);
+  //   // if (isAuthenticated) navigate("/books", { replace: true });
+  // }, [isAuthenticated, navigate]);
 
   return (
     <main className={styles.login}>
       <Navigation />
       <section>
         <form className={styles.form} onSubmit={handleSubmit}>
+          <h3 className={styles.loginHeading}>Login</h3>
           <div className={styles.inputRow}>
             <label htmlFor="email">E-Mail</label>
             <input
               id="email"
               type="email"
               onChange={(e) => setEmail(e.target.value)}
+              value={email}
             />
           </div>
           <div className={styles.inputRow}>
@@ -86,6 +98,7 @@ function Login() {
               id="password"
               type="password"
               onChange={(e) => setPassword(e.target.value)}
+              value={password}
             />
           </div>
           {error && (
@@ -103,10 +116,16 @@ function Login() {
             </div>
           )}
           <div className={styles.buttonRow}>
-            <Button type="secondary" onClick={() => navigate("/")}>
+            <Button
+              disabled={isLoading}
+              type="secondary"
+              onClick={() => navigate("/")}
+            >
               zurück
             </Button>
-            <Button type="primary">Anmelden</Button>
+            <Button disabled={isLoading} type="primary">
+              Anmelden
+            </Button>
           </div>
         </form>
       </section>

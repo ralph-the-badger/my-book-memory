@@ -1,4 +1,4 @@
-import { createContext, useReducer, useContext } from "react";
+import { createContext, useReducer, useContext, useEffect } from "react";
 import { PropTypes } from "prop-types";
 
 const AuthContext = createContext();
@@ -14,33 +14,37 @@ function reducer(state, action) {
       return { ...state, user: action.payload, isAuthenticated: true };
     case "logout":
       return { ...state, user: null, isAuthenticated: false };
+    default:
+      return { ...state };
   }
 }
 
-const FAKE_TOKEN = {
-  id: "1",
-  name: "Ralph",
-  email: "badger_rr@gmx.de",
-  token: "1234",
-};
-
 function AuthProvider({ children }) {
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("userData"));
+    if (user) {
+      dispatch({ type: "login", payload: user });
+    }
+  }, []);
+
   const [{ isAuthenticated, user }, dispatch] = useReducer(
     reducer,
     initialState
   );
 
-  function loginAuth(token) {
-    console.log(`loginAuth: ${token}`);
-    // if (token === FAKE_TOKEN.token) {
-    if (token) {
-      dispatch({ type: "login", payload: FAKE_TOKEN });
+  function loginAuth(user) {
+    if (user.token) {
+      dispatch({ type: "login", payload: user });
     }
   }
 
   function logoutAuth() {
     dispatch({ type: "logout" });
   }
+
+  console.log(
+    `AuthContext State: isAuthenticated: ${isAuthenticated},  user: ${user}`
+  );
 
   return (
     <AuthContext.Provider
