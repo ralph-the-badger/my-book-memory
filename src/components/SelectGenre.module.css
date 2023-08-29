@@ -1,0 +1,19 @@
+.selectGenre label {
+  padding-bottom: 5px;
+}
+
+.selectGenre select {
+  width: calc(100% - 1rem);
+  background-color: var(--color-main-white);
+  font-size: 1.125rem;
+  line-height: 2.5rem;
+  border: 2px solid rgb(118, 118, 118);
+  border-radius: 5px;
+  padding-left: 1rem;
+}
+
+.selectGenre option {
+  background-color: var(--color-main-white);
+  font-family: "Lato", Arial, Helvetica, sans-serif;
+  height: 40px;
+}

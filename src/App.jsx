@@ -9,6 +9,7 @@ import "./App.css";
 import User from "./pages/User";
 import Register from "./pages/Register";
 import Books from "./pages/Books";
+import AddBook from "./pages/AddBook";
 // import ProtectedRoute from "./pages/ProtectedRoute";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/user" element={<User />}></Route>
           {/* <ProtectedRoute> */}
           <Route path="/books" element={<Books />}></Route>
+          <Route path="/books/add" element={<AddBook />}></Route>
           {/* </ProtectedRoute> */}
         </Routes>
       </BrowserRouter>

@@ -140,7 +140,7 @@ function Register() {
               zurück
             </Button>
             <Button disabled={isLoading} type="primary">
-              Registrieren
+              {isLoading ? "Sie werden registriert" : "Registrieren"}
             </Button>
           </div>
         </form>

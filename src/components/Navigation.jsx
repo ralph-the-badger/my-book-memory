@@ -36,6 +36,12 @@ function Navigation() {
         {user && (
           <>
             <span className={styles.welcome}>Hallo, {user.name}</span>
+            <Button type="secondary" onClick={() => navigate("/books")}>
+              Buch-Übersicht
+            </Button>
+            <Button type="secondary" onClick={() => navigate("/books/add")}>
+              Buch hinzufügen
+            </Button>
             <Button type="primary" onClick={handleLogout}>
               Logout
             </Button>

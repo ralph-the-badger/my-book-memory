@@ -26,7 +26,7 @@ export const useLogin = () => {
 
     const returnedUser = response.data;
 
-    if (response.status === 400) {
+    if (response.status !== 200) {
       setIsLoading(false);
       setError(returnedUser.data);
       return { error };
@@ -43,7 +43,7 @@ export const useLogin = () => {
         "Sie wurden erfolgreich angemeldet. Sie werden in Kürze weitergeleitet."
       );
 
-      setTimeout(() => navigate("/books"), 2500);
+      setTimeout(() => navigate("/books"), 2000);
     }
   };
   return { login, isLoading, error, success };

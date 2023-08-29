@@ -124,7 +124,7 @@ function Login() {
               zurück
             </Button>
             <Button disabled={isLoading} type="primary">
-              Anmelden
+              {isLoading ? "Sie werden angemeldet" : "Anmelden"}
             </Button>
           </div>
         </form>
