@@ -1,0 +1,26 @@
+.listItem {
+  background: var(--color-main-white);
+  color: var(--color-main-black);
+  padding: 25px;
+  border-radius: 5px;
+}
+
+.listItem h3 {
+  font-size: 1.5rem;
+  line-height: 2.25rem;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.authors span:after {
+  content: ", ";
+}
+
+.authors span:last-child:after {
+  content: "";
+}
+
+.listItem button {
+  margin: 20px auto 0 auto;
+  display: block;
+}

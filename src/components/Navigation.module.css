@@ -1,10 +1,11 @@
-.navigation {
+.header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 5rem;
   background: linear-gradient(rgba(36, 42, 46, 0.75), rgba(36, 42, 46, 0.75));
+  height: 6.5rem;
 }
 
 .navigation ul {
@@ -31,4 +32,74 @@
 
 .welcome {
   color: var(--color-main-white);
+}
+
+/* responsive nav */
+.header .nav-btn {
+  padding: 5px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--color-main-white);
+  display: none;
+  opacity: 0;
+}
+/* 
+.nav-close-btn {
+  color: red;
+} */
+
+@media only screen and (max-width: 1024px) {
+  .header {
+    height: 2rem;
+  }
+
+  .header .nav-btn {
+    display: flex;
+    opacity: 1;
+  }
+
+  .header .nav-btn svg {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
+  .navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    background-color: var(--color-grey-dark);
+    transition: 1s;
+    transform: translateY(-100vh);
+  }
+
+  .navigation ul {
+    flex-direction: column;
+  }
+
+  .navigation .welcome {
+    color: var(--color-main-light);
+    font-size: 1.5rem;
+    line-height: 1.6875rem;
+    margin-bottom: 50px;
+  }
+
+  .navigation button {
+    background-color: transparent;
+    color: var(--color-main-white);
+  }
+
+  .header .nav-close-btn {
+    position: absolute;
+    right: 5rem;
+    top: 1rem;
+  }
 }

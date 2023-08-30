@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 // import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
-
 import Navigation from "../components/Navigation";
+import BooksCard from "./BooksCard";
+
+import styles from "./Books.module.css";
 
 function Books() {
   const [books, setBooks] = useState([]);
@@ -46,28 +48,21 @@ function Books() {
   }, [user]);
 
   return (
-    <>
+    <main className={styles.booksOverview}>
       <Navigation />
       {isLoading && <p>Ihre Bücher werden geladen ...</p>}
       {error && <p>{error}</p>}
       {books && books.length > 0 && (
-        <ul>
-          {books.map((book, index) => (
-            <li key={index}>
-              {book.title} by{" "}
-              {/* {book.authors.map((author, i) => (
-                <span key={i}>{author}</span>
-              ))}
-              {book.image ? (
-                <img src={`/images/${book.image}`} alt={book.title} />
-              ) : (
-                <img src={`/images/book-logo.png`} alt="Default Book Image" />
-              )} */}
-            </li>
-          ))}
-        </ul>
+        <section>
+          <h1>Meine Buch-Übersicht</h1>
+          <ul className={styles.list}>
+            {books.map((book) => (
+              <BooksCard key={book._id} book={book} />
+            ))}
+          </ul>
+        </section>
       )}
-    </>
+    </main>
   );
 }
 

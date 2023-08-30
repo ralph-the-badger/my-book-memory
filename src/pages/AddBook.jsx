@@ -29,29 +29,31 @@ function AddBook() {
     setGenre(e.target.value);
   }
 
+  // create array from multiple entries divided by seperator
+  const join = (arr, sep = "|") =>
+    arr[0] ? arr.reduce((acc, item) => acc + sep + item) : "";
+
   // save multiple authors
-  const authorSplittedByComma = authors
-    .split(",")
-    .reduce((acc, red) => acc + red + "<br>", []);
+  const authorSplittedByComma = authors.split(",");
+  const authorsArray = join(authorSplittedByComma);
 
   // save multiline textarea
-  const contentSplittedByLineBreak = content
-    .split("\n")
-    .reduce((acc, red) => acc + red + "<br>", []);
+  const contentSplittedByLineBreak = content.split("\n");
+  const contentArray = join(contentSplittedByLineBreak);
 
   async function handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData();
     formData.append("title", title);
     formData.append("subtitle", subtitle);
-    formData.append("authors", authorSplittedByComma);
+    formData.append("authors", authorsArray);
     formData.append("published", published);
     if (image) {
       formData.append("image", image);
       formData.append("filename", image.name);
     }
     // formData.append("image", image);
-    formData.append("content", contentSplittedByLineBreak);
+    formData.append("content", contentArray);
     formData.append("genre", genre);
 
     await addBook(formData);

@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
 
+import styles from "./Logo.module.css";
+
 function Logo() {
   return (
-    <Link to="/">
-      <img src="/book-logo.png" alt="Book Icon" />
-    </Link>
+    <div className={styles.logo}>
+      <Link to="/">
+        <img src="/book-logo.png" alt="Book Icon" />
+      </Link>
+    </div>
   );
 }
 
