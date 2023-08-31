@@ -124,6 +124,8 @@ function AddBook() {
           <div className={styles.inputRow}>
             <label htmlFor="content">Inhalt</label>
             <textarea
+              className={styles.content}
+              rows="5"
               id="content"
               type="text"
               onChange={(e) => setContent(e.target.value)}

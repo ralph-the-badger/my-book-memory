@@ -55,6 +55,10 @@ body {
   background-color: var(--color-main-white);
 }
 
+a {
+  text-decoration: none;
+}
+
 @media only screen and (max-width: 1024px) {
   .responsive_nav {
     transform: none;

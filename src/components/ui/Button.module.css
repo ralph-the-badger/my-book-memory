@@ -4,6 +4,7 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: inherit;
+  text-decoration: none;
 }
 
 .primary {
@@ -24,4 +25,24 @@
 .secondary:hover,
 .secondary:focus {
   background-color: var(--color-main-lighter);
+}
+
+.tertiary {
+  color: var(--color-main-white);
+  background-color: var(--color-main-darker);
+}
+
+.tertiary:hover,
+.tertiary:focus {
+  background-color: var(--color-main-dark);
+}
+
+.error {
+  color: var(--color-white);
+  background-color: var(--color-dark-red);
+}
+
+.error:hover,
+.error:focus {
+  background-color: var(--color-red);
 }

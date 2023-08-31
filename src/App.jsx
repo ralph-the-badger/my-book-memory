@@ -10,6 +10,7 @@ import User from "./pages/User";
 import Register from "./pages/Register";
 import Books from "./pages/Books";
 import AddBook from "./pages/AddBook";
+import Book from "./pages/Book";
 // import ProtectedRoute from "./pages/ProtectedRoute";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           {/* <ProtectedRoute> */}
           <Route path="/books" element={<Books />}></Route>
           <Route path="/books/add" element={<AddBook />}></Route>
+          <Route path="/books/:id" element={<Book />}></Route>
           {/* </ProtectedRoute> */}
         </Routes>
       </BrowserRouter>

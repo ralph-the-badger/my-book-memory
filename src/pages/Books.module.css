@@ -1,12 +1,16 @@
-.booksOverview {
+main {
   background: var(--color-main-lighter);
+}
+
+.booksOverview {
+  /* background: var(--color-main-lighter); */
   padding-bottom: 100px;
 }
 
 .booksOverview section {
   max-width: 1180px;
   margin: 5rem auto;
-  background: var(--color-main-lighter);
+  /* background: var(--color-main-lighter); */
   height: 100%;
 }
 

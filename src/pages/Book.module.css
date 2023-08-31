@@ -1,0 +1,95 @@
+main {
+  background: var(--color-main-lighter);
+}
+
+.bookDetails {
+  /* background: var(--color-main-lighter); */
+  padding-bottom: 100px;
+}
+
+.bookDetailsSection {
+  max-width: 1180px;
+  margin: 5rem auto;
+  /* background: var(--color-main-lighter); */
+  height: 100%;
+  display: flex;
+}
+
+.bookDetailsMetaSection {
+  flex-direction: row;
+  gap: 4%;
+}
+
+.bookDetailsContentSection {
+  flex-direction: column;
+}
+
+.bookDetailsMeta {
+  width: 70%;
+}
+
+.bookDetailsImage {
+  width: 25%;
+}
+
+.bookDetailsImage img {
+  width: 100%;
+}
+
+.bookDetailsHeading {
+  font-size: 3rem;
+  line-height: 4.5rem;
+  margin-bottom: 2rem;
+}
+
+.bookDetailsSubheading {
+  font-size: 2.25rem;
+  line-height: 3.375rem;
+  margin-bottom: 2rem;
+}
+
+.bookDetailsAuthors,
+.bookDetailsGenre,
+.bookDetailsPublished,
+.bookDetailsContentParagraph {
+  padding-bottom: 10px;
+}
+
+.bookDetailsAuthors span:after {
+  content: ", ";
+}
+
+.bookDetailsAuthors span:last-child:after {
+  content: "";
+}
+
+.bookDetailsContentSection h2 {
+  margin-bottom: 2rem;
+}
+
+.buttonRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 1180px;
+  margin: 5rem auto;
+}
+
+@media only screen and (max-width: 1200px) {
+  .bookDetailsMetaSection,
+  .bookDetailsContentSection,
+  .buttonRow {
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .bookDetailsMetaSection {
+    flex-direction: column;
+  }
+  .buttonRow {
+    flex-direction: column-reverse;
+    gap: 50px;
+  }
+}
