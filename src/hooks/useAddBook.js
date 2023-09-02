@@ -16,9 +16,9 @@ export const useAddBook = () => {
     setIsLoading(true);
     setError(false);
 
-    // for (const pair of formData.entries()) {
-    //   console.log(pair[0], pair[1]);
-    // }
+    for (const pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
 
     for (const pair of formData.entries()) {
       // if (pair[0] === "title") {

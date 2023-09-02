@@ -10,6 +10,10 @@ function BooksCard({ book }) {
       <h3 className={styles.title}>
         {book.title} {book.subtitle ? ` - ${book.subtitle}` : ""}
       </h3>
+      {/* <img
+        src={`http://localhost:5000/images/${book.image}`}
+        alt={book.title}
+      /> */}
       <p className={styles.authors}>
         {book.authors.length === 1 ? "Autor: " : "Autoren: "}
         {book.authors.map((author) => (

@@ -2,7 +2,26 @@ import { PropTypes } from "prop-types";
 
 import styles from "./SelectGenre.module.css";
 
-function SelectGenre({ onHandleGenreSelect }) {
+const genreArray = [
+  { id: 1, value: "None", option: "Bitte wählen Sie ein Genre aus" },
+  { id: 2, value: "Biografie", option: "Biografie" },
+  { id: 3, value: "Entwicklungsroman", option: "Entwicklungsroman" },
+  { id: 4, value: "Fachbuch", option: "Fachbuch" },
+  { id: 5, value: "Familienroman", option: "Familienroman" },
+  { id: 6, value: "Fantasy", option: "Fantasy" },
+  { id: 7, value: "Gesellschaftsroman", option: "Gesellschaftsroman" },
+  { id: 8, value: "Historischer Roman", option: "Historischer Roman" },
+  { id: 9, value: "Horror", option: "Horror" },
+  { id: 10, value: "Krimi", option: "Krimi" },
+  { id: 11, value: "Liebesroman", option: "Liebesroman" },
+  { id: 12, value: "Ratgeber", option: "Ratgeber" },
+  { id: 13, value: "Reiseroman", option: "Reiseroman" },
+  { id: 14, value: "Sachbuch", option: "Sachbuch" },
+  { id: 15, value: "Science Fiction", option: "Science Fiction" },
+  { id: 16, value: "Thriller", option: "Thriller" },
+];
+
+function SelectGenre({ onHandleGenreSelect, selectedValue }) {
   return (
     <div className={styles.selectGenre}>
       <label htmlFor="select-genre">Genre</label>
@@ -11,22 +30,15 @@ function SelectGenre({ onHandleGenreSelect }) {
         name="select-genre"
         onChange={(e) => onHandleGenreSelect(e)}
       >
-        <option value="None">Bitte wählen Sie ein Genre aus</option>
-        <option value="Biografie">Biografie</option>
-        <option value="Entwicklungsroman">Entwicklungsroman</option>
-        <option value="Fachbuch">Fachbuch</option>
-        <option value="Familienroman">Familienroman</option>
-        <option value="Fantasy">Fantasy</option>
-        <option value="Gesellschaftsroman">Gesellschaftsroman</option>
-        <option value="Historischer Roman">Historischer Roman</option>
-        <option value="Horror">Horror</option>
-        <option value="Krimi">Krimi</option>
-        <option value="Liebesroman">Liebesroman</option>
-        <option value="Ratgeber">Ratgeber</option>
-        <option value="Reiseroman">Reiseroman</option>
-        <option value="Sachbuch">Sachbuch</option>
-        <option value="Science Fiction">Science Fiction</option>
-        <option value="Thriller">Thriller</option>
+        {genreArray.map((genre) => (
+          <option
+            key={genre.id}
+            value={genre.value}
+            selected={selectedValue === genre.option ? true : false}
+          >
+            {genre.option}
+          </option>
+        ))}
       </select>
     </div>
   );
@@ -34,6 +46,7 @@ function SelectGenre({ onHandleGenreSelect }) {
 
 SelectGenre.propTypes = {
   onHandleGenreSelect: PropTypes.func,
+  selectedValue: PropTypes.String,
 };
 
 export default SelectGenre;

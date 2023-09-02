@@ -8,10 +8,8 @@ export const useGetBook = () => {
   const [isLoading, setIsLoading] = useState(null);
 
   const { user } = useAuth();
-  console.log("user: " + user.token);
 
   const getBook = async (id) => {
-    console.log(id, user);
     setIsLoading(true);
     setError(false);
     const response = await axios({
@@ -22,7 +20,6 @@ export const useGetBook = () => {
         Authorization: `Bearer ${user.token}`,
       },
     });
-    console.log(response);
     const returnedBook = response.data;
 
     if (!response.status === 200) {

@@ -141,7 +141,11 @@ function Book() {
             >
               Buch löschen
             </Button>
-            <Button disabled={isLoading} type="tertiary">
+            <Button
+              disabled={isLoading}
+              type="tertiary"
+              onClick={() => navigate(`/books/${id}/edit`)}
+            >
               Buch editieren
             </Button>
           </section>
