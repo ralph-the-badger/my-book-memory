@@ -12,95 +12,92 @@ export const useEditBook = () => {
   //   const navigate = useNavigate();
   const { user } = useAuth();
 
+  const navigate = useNavigate();
+
   const { id } = useParams();
 
-  const editBook = async (editedFormData) => {
+  const editBook = async (book) => {
     setIsLoading(true);
     setError(false);
 
-    let body = new FormData();
-    for (const pair of editedFormData.entries()) {
-      body.set(pair[0], pair[1]);
-      console.log(pair[0], pair[1]);
-    }
-
-    // for (const pair of formData.entries()) {
-    //   // if (pair[0] === "title") {
-    //   //   if (pair[1] === "") {
-    //   //     setError(["Bitte geben Sie bitte einen Buchtitel an!"]);
-    //   //     return { error };
-    //   //   }
-    //   // }
-    //   // if (pair[0] === "authors") {
-    //   //   console.log(pair[1]);
-    //   //   if (pair[1] === "") {
-    //   //     setError(["Bitte geben Sie bitte mind. einen Autor an!"]);
-    //   //     return { error };
-    //   //   }
-    //   // }
-    //   if (pair[0] === "filename") {
-    //     if (!pair[1].match(/^[a-zA-Z 0-9.,_-]*$/)) {
-    //       setError([
-    //         "Bitte stellen Sie sicher, dass im Dateinamen keine Leerzeichen, Umlaute und Sonderzeichen (Ausnahme: _ und -) enthalten sind, da es sonst zu Komplikationen bei der Bereitstellung von Bildern kommen kann.",
-    //       ]);
-    //       return { error };
-    //     }
-    //   }
-    // }
-
-    const response = await fetch(`http://localhost:5000/books/${id}/edit`, {
+    const response = await axios({
       method: "POST",
-      body: editedFormData,
       headers: {
-        // "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json",
         Authorization: `Bearer ${user.token}`,
       },
+      url: `http://localhost:5000/books/edit`,
+      data: book,
     });
 
-    console.log(response);
-    try {
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-      } else {
-        throw new Error("Schei ......");
-      }
-    } catch (e) {
-      console.log(e);
-    }
-
-    // const response = await axios({
-    //   method: "POST",
-    //   url: `http://localhost:5000/books/${id}/edit`,
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //     Authorization: `Bearer ${user.token}`,
-    //   },
-    //   data: editedFormData,
-    // });
-    const returnedBook = response.data;
-
-    // if (response.code === "ERR_BAD_REQUEST") {
-    //   setError([
-    //     "Die Daten können aufgrund eines Server-Fehlers nicht verarbeitet werden.",
-    //   ]);
-    //   return { error };
-    // }
+    const editedBook = await response.data;
 
     if (!response.status === 200) {
       setIsLoading(false);
-      setError(returnedBook.data);
+      setError(editedBook.data);
       return { error };
     }
     if (response.status === 200) {
       setIsLoading(false);
 
       setSuccess(
-        "Das Buch wurde erfolgreich angelegt. Sie werden in Kürze zu Ihrer Buch-Übersicht weitergeleitet."
+        "Das Buch wurde erfolgreich angepasst. Sie werden in Kürze zu Ihrem Buch weitergeleitet."
       );
 
-      //   setTimeout(() => navigate("/books"), 2000);
+      setTimeout(() => navigate(`/books/${id}`), 2000);
     }
   };
+
+  // const getBookData = async () => {
+  //   setIsLoading(true);
+  //   setError(false);
+  //   try {
+  //     const response = await axios({
+  //       method: "get",
+  //       url: `http://localhost:5000/books/${id}`,
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${user.token}`,
+  //       },
+  //     });
+
+  //     if (!response || response.status !== 200) {
+  //       throw new Error(
+  //         "Beim Laden des Buchs ist ein Fehler aufgetreten. Bitte stellen Sie sicher, dass Sie angemeldet sind."
+  //       );
+  //     }
+
+  //     if (response.status === 200) {
+  //       setTitle(() => response.data.book[0].title);
+  //       setSubtitle(() => response.data.book[0].subtitle);
+  //       setAuthors(() =>
+  //         response.data.book[0].authors.map((a) => a.author).join()
+  //       );
+  //       setPublished(() => new Date(response.data.book[0].published));
+
+  //       setGenre(() =>
+  //         response.data.book[0].genre === undefined
+  //           ? "None"
+  //           : response.data.book[0].genre
+  //       );
+  //       setContent(() => {
+  //         const contentArray = response.data.book[0].content.map(
+  //           (c) => c.paragraph
+  //         );
+  //         const modifiedContent = contentArray.join("|||");
+  //         const paragraphedContent = String(modifiedContent).replaceAll(
+  //           "|||",
+  //           "\n"
+  //         );
+  //         return paragraphedContent;
+  //       });
+  //     }
+  //   } catch (e) {
+  //     setError(e.message);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
   return { editBook, isLoading, error, success };
 };

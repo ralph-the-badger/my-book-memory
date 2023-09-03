@@ -17,30 +17,13 @@ export const useAddBook = () => {
     setError(false);
 
     for (const pair of formData.entries()) {
-      console.log(pair[0], pair[1]);
-    }
-
-    for (const pair of formData.entries()) {
-      // if (pair[0] === "title") {
-      //   if (pair[1] === "") {
-      //     setError(["Bitte geben Sie bitte einen Buchtitel an!"]);
-      //     return { error };
-      //   }
-      // }
-      // if (pair[0] === "authors") {
-      //   console.log(pair[1]);
-      //   if (pair[1] === "") {
-      //     setError(["Bitte geben Sie bitte mind. einen Autor an!"]);
-      //     return { error };
-      //   }
-      // }
-      if (pair[0] === "filename") {
-        if (!pair[1].match(/^[a-zA-Z 0-9.,_-]*$/)) {
-          setError([
-            "Bitte stellen Sie sicher, dass im Dateinamen keine Leerzeichen, Umlaute und Sonderzeichen (Ausnahme: _ und -) enthalten sind, da es sonst zu Komplikationen bei der Bereitstellung von Bildern kommen kann.",
-          ]);
-          return { error };
-        }
+      if (pair[0] === "title" && pair[1] === "") {
+        setError(["Bitte geben Sie einen Titel an."]);
+        return { error };
+      }
+      if (pair[0] === "authors" && pair[1] === "") {
+        setError(["Bitte geben Sie mindestens einen Autor an"]);
+        return { error };
       }
     }
 
@@ -53,14 +36,7 @@ export const useAddBook = () => {
       },
       data: formData,
     });
-    const returnedBook = response.data;
-
-    // if (response.code === "ERR_BAD_REQUEST") {
-    //   setError([
-    //     "Die Daten können aufgrund eines Server-Fehlers nicht verarbeitet werden.",
-    //   ]);
-    //   return { error };
-    // }
+    const returnedBook = await response.data;
 
     if (!response.status === 200) {
       setIsLoading(false);

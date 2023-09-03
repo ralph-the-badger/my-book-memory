@@ -75,6 +75,39 @@ main {
   margin: 5rem auto;
 }
 
+.messageSection {
+  max-width: 1180px;
+  margin: 5rem auto;
+  display: flex;
+}
+
+.errorContainer {
+  background-color: var(--color-dark-red);
+  border-radius: 10px;
+}
+
+.errorContainer ul {
+  list-style-type: none;
+}
+
+.errorContainer ul li {
+  color: var(--color-main-white);
+  text-align: left;
+  padding: 1rem;
+}
+
+.successContainer {
+  background-color: var(--color-dark-green);
+  border-radius: 10px;
+  width: 100%;
+}
+
+.successContainer p {
+  color: var(--color-main-white);
+  text-align: left;
+  padding: 1rem;
+}
+
 @media only screen and (max-width: 1200px) {
   .bookDetailsMetaSection,
   .bookDetailsContentSection,

@@ -50,8 +50,18 @@ function Books() {
   return (
     <main className={styles.booksOverview}>
       <Navigation />
-      {isLoading && <p>Ihre Bücher werden geladen ...</p>}
-      {error && <p>{error}</p>}
+      {(error || isLoading) && (
+        <section className={styles.messageSection}>
+          {isLoading && <p>Ihre Bücher werden geladen ...</p>}
+          {error && <p>{error}</p>}
+        </section>
+      )}
+      {books && books.length === 0 && (
+        <section>
+          <h1>Meine Buch-Übersicht</h1>
+          <p>Sie haben noch keine Bücher eingetragen.</p>
+        </section>
+      )}
       {books && books.length > 0 && (
         <section>
           <h1>Meine Buch-Übersicht</h1>

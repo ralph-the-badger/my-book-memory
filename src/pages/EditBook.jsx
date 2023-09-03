@@ -1,27 +1,26 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-// import { PropTypes } from "prop-types";
 import DatePicker from "react-datepicker";
-// import { useEditBook } from "../hooks/useEditBook.js";
+
+import { useEditBook } from "../hooks/useEditBook.js";
 import { useAuth } from "../context/authContext";
 
 import Navigation from "../components/Navigation";
-import Button from "../components/ui/Button.jsx";
+import SelectGenre from "../components/SelectGenre";
+import Button from "../components/ui/Button";
 
 import styles from "./EditBook.module.css";
 import "react-datepicker/dist/react-datepicker.css";
-import SelectGenre from "../components/SelectGenre.jsx";
 
 function EditBook() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { isAuthenticated, user } = useAuth();
-  // const { editBook, isLoading, error, success } = useEditBook();
+  const { editBook, success } = useEditBook();
 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
-  const [success, setSuccess] = useState(null);
 
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
@@ -52,6 +51,17 @@ function EditBook() {
   async function handleEditBook(e) {
     e.preventDefault();
 
+    if (title === "") {
+      console.log("ja");
+      setError(["Bitte geben Sie einen Titel an."]);
+      return { error };
+    }
+    if (authors === "") {
+      console.log("ja");
+      setError(["Bitte geben Sie mindestens einen Autor an"]);
+      return { error };
+    }
+
     const book = {
       bookId: id,
       title,
@@ -62,34 +72,7 @@ function EditBook() {
       content: contentArray,
     };
 
-    const response = await axios({
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-      url: `http://localhost:5000/books/edit`,
-      data: book,
-    });
-
-    const returnedBook = response.data;
-
-    console.log(returnedBook);
-
-    if (!response.status === 200) {
-      setIsLoading(false);
-      setError(returnedBook.data);
-      return { error };
-    }
-    if (response.status === 200) {
-      setIsLoading(false);
-
-      setSuccess(
-        "Das Buch wurde erfolgreich angelegt. Sie werden in Kürze zu Ihrer Buch-Übersicht weitergeleitet."
-      );
-
-      setTimeout(() => navigate(`/books/${id}`), 2000);
-    }
+    await editBook(book);
   }
 
   useEffect(() => {
@@ -124,7 +107,6 @@ function EditBook() {
             res.data.book[0].authors.map((a) => a.author).join()
           );
           setPublished(() => new Date(res.data.book[0].published));
-
           setGenre(() =>
             res.data.book[0].genre === undefined
               ? "None"

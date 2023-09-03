@@ -1,9 +1,5 @@
 main {
   background: var(--color-main-lighter);
-}
-
-.booksOverview {
-  /* background: var(--color-main-lighter); */
   padding-bottom: 100px;
 }
 
@@ -26,6 +22,32 @@ main {
   gap: 50px 50px;
   margin-top: 2rem;
   list-style-type: none;
+}
+
+.errorContainer {
+  background-color: var(--color-dark-red);
+  border-radius: 10px;
+}
+
+.errorContainer ul {
+  list-style-type: none;
+}
+
+.errorContainer ul li {
+  color: var(--color-main-white);
+  text-align: left;
+  padding: 1rem;
+}
+
+.successContainer {
+  background-color: var(--color-dark-green);
+  border-radius: 10px;
+}
+
+.successContainer p {
+  color: var(--color-main-white);
+  text-align: left;
+  padding: 1rem;
 }
 
 @media only screen and (max-width: 1200px) {

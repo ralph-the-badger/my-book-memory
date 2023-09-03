@@ -59,6 +59,8 @@ function AddBook() {
     await addBook(formData);
   }
 
+  console.log(error, isLoading);
+
   useEffect(() => {
     isAuthenticated ? navigate("/books/add") : navigate("/books");
   }, [isAuthenticated, navigate]);

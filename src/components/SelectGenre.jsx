@@ -46,7 +46,7 @@ function SelectGenre({ onHandleGenreSelect, selectedValue }) {
 
 SelectGenre.propTypes = {
   onHandleGenreSelect: PropTypes.func,
-  selectedValue: PropTypes.String,
+  selectedValue: PropTypes.string,
 };
 
 export default SelectGenre;

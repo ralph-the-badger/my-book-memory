@@ -21,6 +21,7 @@ function Book() {
   const [book, setBook] = useState({});
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   const { user } = useAuth();
 
@@ -57,13 +58,45 @@ function Book() {
     getBook();
   }, [user]);
 
-  console.log(isLoading, error, book, user);
+  async function deleteBook() {
+    try {
+      const res = await axios({
+        method: "delete",
+        url: `http://localhost:5000/books/${id}`,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+
+      if (!res || res.status !== 200) {
+        throw new Error(
+          "Beim Löschen des Buchs ist ein Fehler aufgetreten. Bitte versuchen Sie es noch einmal."
+        );
+      }
+
+      if (res.status === 200) {
+        setSuccess(
+          "Das Buch wurde erfolgreich gelöscht. Sie werden in Kürze zu Ihrer Buch-Übersicht weitergeleitet."
+        );
+        setTimeout(() => navigate("/books"), 2000);
+      }
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
     <main className={styles.bookDetails}>
       <Navigation />
-      {isLoading && <p>Ihre Buch wird geladen ...</p>}
-      {error && <p>{error}</p>}
+      {(error || isLoading) && (
+        <section className={styles.messageSection}>
+          {isLoading && <p>Ihr Buch wird geladen ...</p>}
+          {error && <p>{error}</p>}
+        </section>
+      )}
       {book && book.length > 0 && (
         <>
           <section
@@ -126,6 +159,15 @@ function Book() {
               </Fragment>
             ))}
           </section>
+          {success && (
+            <section className={styles.messageSection}>
+              {success !== null && (
+                <div className={styles.successContainer}>
+                  <p>{success}</p>
+                </div>
+              )}
+            </section>
+          )}
           <section className={styles.buttonRow}>
             <Button
               disabled={isLoading}
@@ -134,11 +176,7 @@ function Book() {
             >
               zurück
             </Button>
-            <Button
-              disabled={isLoading}
-              type="error"
-              // onClick={() => navigate("/")}
-            >
+            <Button disabled={isLoading} type="error" onClick={deleteBook}>
               Buch löschen
             </Button>
             <Button

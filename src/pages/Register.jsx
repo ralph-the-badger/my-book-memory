@@ -13,6 +13,7 @@ import styles from "./Register.module.css";
 function Register() {
   const navigate = useNavigate();
 
+  const [accessCode, setAccessCode] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,6 +22,7 @@ function Register() {
   async function handleSubmit(e) {
     e.preventDefault();
     const user = {
+      accessCode,
       name,
       email,
       password,
@@ -82,6 +84,15 @@ function Register() {
         <form className={styles.form} onSubmit={handleSubmit}>
           <h3 className={styles.registerHeading}>Registrieren</h3>
           <div className={styles.inputRow}>
+            <label htmlFor="accessCode">Freigabe-Code</label>
+            <input
+              id="accessCode"
+              type="accessCode"
+              onChange={(e) => setAccessCode(e.target.value)}
+              value={accessCode}
+            />
+          </div>
+          <div className={styles.inputRow}>
             <label htmlFor="name">Benutzername</label>
             <input
               id="name"
@@ -89,9 +100,6 @@ function Register() {
               onChange={(e) => setName(e.target.value)}
               value={name}
             />
-            {/* <span className={styles.registerInfo}>
-              Bitte wählen Sie einen Benutzernamen ohne Leerzeichen
-            </span> */}
           </div>
           <div className={styles.inputRow}>
             <label htmlFor="email">E-Mail</label>
@@ -101,9 +109,6 @@ function Register() {
               onChange={(e) => setEmail(e.target.value)}
               value={email}
             />
-            {/* <span className={styles.registerInfo}>
-              Bitte geben Sie eine validate E-Mail-Adresse an
-            </span> */}
           </div>
           <div className={styles.inputRow}>
             <label htmlFor="password">Passwort</label>
@@ -113,9 +118,6 @@ function Register() {
               onChange={(e) => setPassword(e.target.value)}
               value={password}
             />
-            {/* <span className={styles.registerInfo}>
-              Bitte wählen Sie ein sicheres Passwort
-            </span> */}
           </div>
           {error && (
             <div className={styles.errorContainer}>
