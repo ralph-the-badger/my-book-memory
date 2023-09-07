@@ -1,8 +1,12 @@
-# React + Vite
+# My Book Memory (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+This React-Single Page Application (SPA) is the server-side part of the MERN-Application "My Book Memory".
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This application is made for users to keep track of their read book. Often people read many books and later they can't remember the books' main content or their highlighted passages. This is a pitty. Therefore, this app enables users to create book entrys and to write down the books essential content.
+Users can register (with a secret access code) and login to see their own book entries. They can see their book list and their single book entry, they can update their book entry and delete it.
+
+## Stack
+
+React + Vite, React Router DOM, Axios, JSON Web Token
