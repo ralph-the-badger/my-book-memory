@@ -95,3 +95,29 @@
   text-align: left;
   padding: 1rem;
 }
+
+@media only screen and (max-width: 1180px) {
+  .register section {
+    height: 100%;
+    max-width: 75%;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .form {
+    max-width: 80%;
+  }
+}
+
+@media only screen and (max-width: 567px) {
+  .register {
+    height: 100%;
+  }
+  .form {
+    margin-top: 100px;
+  }
+  .buttonRow {
+    flex-direction: column-reverse;
+    gap: 2rem;
+  }
+}

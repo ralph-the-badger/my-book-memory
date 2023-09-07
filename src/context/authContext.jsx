@@ -1,4 +1,5 @@
 import { createContext, useReducer, useContext, useEffect } from "react";
+import jwt_decode from "jwt-decode";
 import { PropTypes } from "prop-types";
 
 const AuthContext = createContext();
@@ -25,6 +26,16 @@ function AuthProvider({ children }) {
     if (user) {
       dispatch({ type: "login", payload: user });
     }
+
+    if (user) {
+      let decodedToken = jwt_decode(user.token);
+      let currentDate = new Date();
+      if (decodedToken.exp > currentDate.getTime()) {
+        dispatch({ type: "logout" });
+      } else {
+        dispatch({ payload: user });
+      }
+    }
   }, []);
 
   const [{ isAuthenticated, user }, dispatch] = useReducer(
@@ -41,10 +52,6 @@ function AuthProvider({ children }) {
   function logoutAuth() {
     dispatch({ type: "logout" });
   }
-
-  console.log(
-    `AuthContext State: isAuthenticated: ${isAuthenticated},  user: ${user}`
-  );
 
   return (
     <AuthContext.Provider

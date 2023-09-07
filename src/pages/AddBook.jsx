@@ -59,8 +59,6 @@ function AddBook() {
     await addBook(formData);
   }
 
-  console.log(error, isLoading);
-
   useEffect(() => {
     isAuthenticated ? navigate("/books/add") : navigate("/books");
   }, [isAuthenticated, navigate]);
@@ -69,6 +67,7 @@ function AddBook() {
     <main className={styles.addBook}>
       <Navigation />
       <section>
+        <h1>Buch hinzufügen</h1>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.inputRow}>
             <label htmlFor="title">Buchtitel</label>

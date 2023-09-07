@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-// import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import Navigation from "../components/Navigation";
 import BooksCard from "./BooksCard";
@@ -12,7 +12,7 @@ function Books() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { user } = useAuth();
 
   useEffect(() => {
@@ -28,6 +28,11 @@ function Books() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
           },
+        }).catch(() => {
+          setTimeout(() => navigate("/login"), 3000);
+          throw new Error(
+            "Die Session ist abgelaufen. Bitte melden Sie sich erneut an."
+          );
         });
 
         if (!res || res.status !== 200) {
@@ -50,13 +55,20 @@ function Books() {
   return (
     <main className={styles.booksOverview}>
       <Navigation />
-      {(error || isLoading) && (
+      {error && (
+        <section className={styles.messageSection}>
+          <div className={styles.errorContainer}>
+            <p>{error}</p>
+          </div>
+        </section>
+      )}
+      {isLoading && (
         <section className={styles.messageSection}>
           {isLoading && <p>Ihre Bücher werden geladen ...</p>}
           {error && <p>{error}</p>}
         </section>
       )}
-      {books && books.length === 0 && (
+      {!error && books && books.length === 0 && (
         <section>
           <h1>Meine Buch-Übersicht</h1>
           <p>Sie haben noch keine Bücher eingetragen.</p>

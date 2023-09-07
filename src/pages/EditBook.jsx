@@ -26,8 +26,6 @@ function EditBook() {
   const [subtitle, setSubtitle] = useState("");
   const [authors, setAuthors] = useState("");
   const [published, setPublished] = useState(new Date());
-  // const [image, setImage] = useState(null);
-  // const [file, setFile] = useState(null);
   const [content, setContent] = useState("");
   const [genre, setGenre] = useState("");
 
@@ -52,12 +50,10 @@ function EditBook() {
     e.preventDefault();
 
     if (title === "") {
-      console.log("ja");
       setError(["Bitte geben Sie einen Titel an."]);
       return { error };
     }
     if (authors === "") {
-      console.log("ja");
       setError(["Bitte geben Sie mindestens einen Autor an"]);
       return { error };
     }
@@ -137,6 +133,7 @@ function EditBook() {
     <main className={styles.editBook}>
       <Navigation />
       <section>
+        <h1>Buch anpassen</h1>
         <form className={styles.form} onSubmit={handleEditBook}>
           <div className={styles.inputRow}>
             <label htmlFor="title">Buchtitel</label>

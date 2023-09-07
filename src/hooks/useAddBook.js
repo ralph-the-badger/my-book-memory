@@ -35,7 +35,13 @@ export const useAddBook = () => {
         Authorization: `Bearer ${user.token}`,
       },
       data: formData,
+    }).catch(() => {
+      setTimeout(() => navigate("/login"), 3000);
+      setError([
+        "Die Session ist abgelaufen. Bitte melden Sie sich erneut an.",
+      ]);
     });
+
     const returnedBook = await response.data;
 
     if (!response.status === 200) {

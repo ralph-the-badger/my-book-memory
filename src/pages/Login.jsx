@@ -10,7 +10,6 @@ import Button from "../components/ui/Button";
 import styles from "./Login.module.css";
 
 function Login() {
-  // const { isAuthenticated, loginAuth } = useAuth();
   const navigate = useNavigate();
 
   const { login, isLoading, error, success } = useLogin();
@@ -26,56 +25,6 @@ function Login() {
     };
     await login(user);
   }
-
-  // async function handleSubmit(e) {
-  //   e.preventDefault();
-  //   if (!email) setError(["Bitte geben Sie eine E-Mail-Adresse an!"]);
-  //   if (!password) setError(["Bitte geben Sie ein Passwort an!"]);
-  //   const user = { email, password };
-  //   await loginUser(user);
-  // }
-
-  // async function loginUser(user) {
-  //   try {
-  //     const response = await axios({
-  //       method: "POST",
-  //       url: "http://localhost:5000/login",
-  //       data: user,
-  //     });
-
-  //     const returnedUser = await response.data;
-  //     await loginAuth(returnedUser);
-  //     await localStorage.setItem("userData", JSON.stringify(returnedUser));
-
-  //     // await response.json;
-  //     setError([]);
-  //     setSuccess(
-  //       "Die Anmeldung war erfolgreich. Sie werden in Kürze weitergeleitet."
-  //     );
-  //     setEmail("");
-  //     setPassword("");
-  //     // setTimeout(() => navigate("/user"), 2500);
-  //   } catch (e) {
-  //     if (e) {
-  //       return setError([e.response.data[0]]);
-  //     }
-  //     if (error) {
-  //       let errorArray;
-  //       const errorString = error.response.data;
-  //       if (errorString.length > 1) {
-  //         errorArray = errorString;
-  //       } else {
-  //         errorArray = [errorString];
-  //       }
-  //       return setError(errorArray);
-  //     }
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   console.log(isAuthenticated);
-  //   // if (isAuthenticated) navigate("/books", { replace: true });
-  // }, [isAuthenticated, navigate]);
 
   return (
     <main className={styles.login}>

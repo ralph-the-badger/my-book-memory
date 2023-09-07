@@ -89,3 +89,32 @@
   text-align: left;
   padding: 1rem;
 }
+
+@media only screen and (max-width: 1180px) {
+  .login section {
+    height: 100%;
+    max-width: 75%;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .login section {
+    max-width: 75%;
+  }
+  .form {
+    width: 75%;
+  }
+}
+
+@media only screen and (max-width: 567px) {
+  .login {
+    height: 100%;
+  }
+  .form {
+    margin-top: 100px;
+  }
+  .buttonRow {
+    flex-direction: column-reverse;
+    gap: 2rem;
+  }
+}

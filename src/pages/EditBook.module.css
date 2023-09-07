@@ -99,3 +99,22 @@ main {
   text-align: left;
   padding: 1rem;
 }
+
+@media only screen and (max-width: 1180px) {
+  .editBook section {
+    max-width: 75%;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .form {
+    max-width: 80%;
+  }
+}
+
+@media only screen and (max-width: 567px) {
+  .buttonRow {
+    flex-direction: column-reverse;
+    gap: 2rem;
+  }
+}

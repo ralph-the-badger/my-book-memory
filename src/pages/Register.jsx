@@ -30,53 +30,6 @@ function Register() {
     await register(user);
   }
 
-  // async function handleSubmit(e) {
-  //   e.preventDefault();
-  //   if (!name) setError(["Bitte geben Sie einen Benutzernamen an!"]);
-  //   if (!email) setError(["Bitte geben Sie eine E-Mail-Adresse an!"]);
-  //   if (!password) setError(["Bitte geben Sie ein Passwort an!"]);
-  //   const user = {
-  //     name,
-  //     email,
-  //     password,
-  //   };
-  //   await registerUser(user);
-  // }
-
-  // async function registerUser(user) {
-  //   try {
-  //     const response = await axios({
-  //       method: "POST",
-  //       url: "http://localhost:5000/register",
-  //       data: user,
-  //     });
-  //     const returnedUser = response.data;
-  //     console.log(returnedUser);
-
-  //     await response.json;
-  //     setError([]);
-  //     setSuccess(
-  //       "Danke für Ihre Registrierung. Sie werden zum Login weitergeleitet."
-  //     );
-  //     setName("");
-  //     setEmail("");
-  //     setPassword("");
-  //     // setTimeout(() => navigate("/login"), 2500);
-  //   } catch (error) {
-  //     let errorArray;
-  //     const errorString = error.response.data;
-  //     if (errorString.length > 1) {
-  //       errorArray = errorString;
-  //     } else {
-  //       errorArray = [errorString];
-  //     }
-  //     setError(errorArray);
-  //     setName("");
-  //     setEmail("");
-  //     setPassword("");
-  //   }
-  // }
-
   return (
     <main className={styles.register}>
       <Navigation />

@@ -31,6 +31,13 @@ function Book() {
         setIsLoading(true);
         setError("");
 
+        if (!user) {
+          setTimeout(() => navigate("/login"), 3000);
+          throw new Error(
+            "Die Session ist abgelaufen. Bitte melden Sie sich erneut an. Sie werden zum Login weitergeleitet."
+          );
+        }
+
         const res = await axios({
           method: "get",
           url: `http://localhost:5000/books/${id}`,
@@ -38,6 +45,11 @@ function Book() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
           },
+        }).catch(() => {
+          setTimeout(() => navigate("/login"), 3000);
+          throw new Error(
+            "Die Session ist abgelaufen. Bitte melden Sie sich erneut an."
+          );
         });
 
         if (!res || res.status !== 200) {
@@ -91,13 +103,20 @@ function Book() {
   return (
     <main className={styles.bookDetails}>
       <Navigation />
-      {(error || isLoading) && (
+      {error && (
         <section className={styles.messageSection}>
-          {isLoading && <p>Ihr Buch wird geladen ...</p>}
+          <div className={styles.errorContainer}>
+            <p>{error}</p>
+          </div>
+        </section>
+      )}
+      {isLoading && (
+        <section className={styles.messageSection}>
+          {isLoading && <p>Ihre Bücher werden geladen ...</p>}
           {error && <p>{error}</p>}
         </section>
       )}
-      {book && book.length > 0 && (
+      {!error && book && book.length > 0 && (
         <>
           <section
             className={`${styles.bookDetailsSection} ${styles.bookDetailsMetaSection}`}

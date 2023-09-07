@@ -86,6 +86,12 @@ main {
   border-radius: 10px;
 }
 
+.errorContainer p {
+  color: var(--color-main-white);
+  text-align: left;
+  padding: 1rem;
+}
+
 .errorContainer ul {
   list-style-type: none;
 }
@@ -108,7 +114,7 @@ main {
   padding: 1rem;
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1180px) {
   .bookDetailsMetaSection,
   .bookDetailsContentSection,
   .buttonRow {
@@ -125,4 +131,10 @@ main {
     flex-direction: column-reverse;
     gap: 50px;
   }
+  .bookDetailsImage img {
+    margin-top: 50px;
+  }
+}
+
+@media only screen and (max-width: 576px) {
 }

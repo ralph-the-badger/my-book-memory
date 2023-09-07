@@ -56,3 +56,33 @@
   box-shadow: 1px -1px var(--color-main-darker),
     -1px -1px var(--color-main-darker);
 }
+
+@media only screen and (max-width: 1180px) {
+  .home section {
+    height: 100%;
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+}
+
+@media only screen and (max-width: 776px) {
+  .home {
+    height: 100%;
+  }
+  .home section {
+    margin-top: 50px;
+    gap: 3rem;
+  }
+  .home h1 {
+    font-size: 3rem;
+    line-height: 4.5rem;
+  }
+  .home h2 {
+    font-size: 2rem;
+    line-height: 3rem;
+  }
+  .home p {
+    font-size: 1.25rem;
+    line-height: 1.875rem;
+  }
+}

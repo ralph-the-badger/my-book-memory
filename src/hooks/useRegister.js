@@ -14,7 +14,6 @@ export const useRegister = () => {
   const register = async (user) => {
     setIsLoading(true);
     setError(false);
-    console.log(user.accessCode);
     if (!user.accessCode)
       setError(["Bitte geben Sie einen validen Freigabe-Code ein!"]);
     if (!user.name) setError(["Bitte geben Sie einen Benutzernamen an!"]);

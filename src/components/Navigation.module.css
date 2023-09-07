@@ -79,6 +79,7 @@
     background-color: var(--color-grey-dark);
     transition: 1s;
     transform: translateY(-100vh);
+    z-index: 2;
   }
 
   .navigation ul {
@@ -95,6 +96,13 @@
   .navigation button {
     background-color: transparent;
     color: var(--color-main-white);
+    font-size: 1.5rem;
+    line-height: 1.6875rem;
+  }
+
+  .navigation button:active,
+  .navigation button:focus {
+    color: var(--color-main-black);
   }
 
   .header .nav-close-btn {
