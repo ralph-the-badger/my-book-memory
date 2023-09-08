@@ -13,6 +13,13 @@ function formatDate(date) {
   return formattedDate;
 }
 
+function readImage(image) {
+  const base64String = btoa(
+    String.fromCharCode(...new Uint8Array(image.data.data))
+  );
+  return base64String;
+}
+
 function Book() {
   const { id } = useParams();
 
@@ -34,27 +41,31 @@ function Book() {
         if (!user) {
           setTimeout(() => navigate("/login"), 3000);
           throw new Error(
-            "Die Session ist abgelaufen. Bitte melden Sie sich erneut an. Sie werden zum Login weitergeleitet."
+            "Die Session ist abgelaufen. Bitte melde dich erneut an. Du wirst in Kürze zum Login weitergeleitet."
           );
         }
 
         const res = await axios({
           method: "get",
-          url: `http://localhost:5000/books/${id}`,
+          url: `${import.meta.env.VITE_BACKEND_URL}/books/${id}`,
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
           },
-        }).catch(() => {
-          setTimeout(() => navigate("/login"), 3000);
-          throw new Error(
-            "Die Session ist abgelaufen. Bitte melden Sie sich erneut an."
-          );
+        }).catch((e) => {
+          if (e.response.data.error.includes("Session")) {
+            setTimeout(() => navigate("/login"), 3000);
+            setError([
+              "Die Session ist abgelaufen. Bitte melde dich erneut an. Du wirst in Kürze zum Login weitergeleitet.",
+            ]);
+          } else {
+            setError([e.response.data]);
+          }
         });
 
         if (!res || res.status !== 200) {
           throw new Error(
-            "Beim Laden des Buchs ist ein Fehler aufgetreten. Bitte stellen Sie sicher, dass Sie angemeldet sind."
+            "Beim Laden des Buchs ist ein Fehler aufgetreten. Bitte vergewissere dich, dass du angemeldet bist."
           );
         }
 
@@ -74,7 +85,7 @@ function Book() {
     try {
       const res = await axios({
         method: "delete",
-        url: `http://localhost:5000/books/${id}`,
+        url: `${import.meta.env.VITE_BACKEND_URL}/books/${id}`,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
@@ -83,13 +94,13 @@ function Book() {
 
       if (!res || res.status !== 200) {
         throw new Error(
-          "Beim Löschen des Buchs ist ein Fehler aufgetreten. Bitte versuchen Sie es noch einmal."
+          "Beim Löschen des Buchs ist ein Fehler aufgetreten. Bitte versuche es noch einmal."
         );
       }
 
       if (res.status === 200) {
         setSuccess(
-          "Das Buch wurde erfolgreich gelöscht. Sie werden in Kürze zu Ihrer Buch-Übersicht weitergeleitet."
+          "Das Buch wurde erfolgreich gelöscht. Du wirst in Kürze zu deiner Buch-Übersicht weitergeleitet."
         );
         setTimeout(() => navigate("/books"), 2000);
       }
@@ -155,10 +166,16 @@ function Book() {
                   </p>
                 </div>
                 <div className={styles.bookDetailsImage}>
-                  {b.image ? (
-                    <img src={`/images/${b.image}`} alt={b.title} />
+                  {b.image !== null ? (
+                    <img
+                      src={`data: image/png; base64, ${readImage(b.img)}`}
+                      alt={b.title}
+                    />
                   ) : (
-                    <img src={`/images/book-logo.png`} alt="Book Memory Logo" />
+                    <img
+                      src={`/images/book-logo.png`}
+                      alt="My Book Memory Logo"
+                    />
                   )}
                 </div>
               </Fragment>

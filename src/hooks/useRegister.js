@@ -15,15 +15,15 @@ export const useRegister = () => {
     setIsLoading(true);
     setError(false);
     if (!user.accessCode)
-      setError(["Bitte geben Sie einen validen Freigabe-Code ein!"]);
-    if (!user.name) setError(["Bitte geben Sie einen Benutzernamen an!"]);
-    if (!user.email) setError(["Bitte geben Sie eine E-Mail-Adresse an!"]);
-    if (!user.password) setError(["Bitte geben Sie ein Passwort an!"]);
+      setError(["Bitte gib einen validen Freigabe-Code ein."]);
+    if (!user.name) setError(["Bitte gib einen Benutzernamen an."]);
+    if (!user.email) setError(["Bitte gib eine E-Mail-Adresse an."]);
+    if (!user.password) setError(["Bitte gib ein Passwort an."]);
 
     const response = await axios({
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      url: "http://localhost:5000/register",
+      url: `${import.meta.env.VITE_BACKEND_URL}/register`,
       data: user,
     });
 
@@ -43,7 +43,7 @@ export const useRegister = () => {
       setIsLoading(false);
 
       setSuccess(
-        "Danke für Ihre Registrierung. Sie werden zum Login weitergeleitet."
+        "Danke für deine Registrierung. Du wirst zum Login weitergeleitet."
       );
 
       setTimeout(() => navigate("/login"), 2500);

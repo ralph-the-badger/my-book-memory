@@ -50,11 +50,11 @@ function EditBook() {
     e.preventDefault();
 
     if (title === "") {
-      setError(["Bitte geben Sie einen Titel an."]);
+      setError(["Bitte gib einen Titel an."]);
       return { error };
     }
     if (authors === "") {
-      setError(["Bitte geben Sie mindestens einen Autor an"]);
+      setError(["Bitte gib mindestens einen Autor an."]);
       return { error };
     }
 
@@ -83,16 +83,25 @@ function EditBook() {
 
         const res = await axios({
           method: "get",
-          url: `http://localhost:5000/books/${id}`,
+          url: `${import.meta.env.VITE_BACKEND_URL}/books/${id}`,
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
           },
+        }).catch((e) => {
+          if (e.response.data.error.includes("Session")) {
+            setTimeout(() => navigate("/login"), 3000);
+            setError([
+              "Die Session ist abgelaufen. Bitte melde dich erneut an. Du wirst in Kürze zum Login weitergeleitet.",
+            ]);
+          } else {
+            setError([e.response.data]);
+          }
         });
 
         if (!res || res.status !== 200) {
           throw new Error(
-            "Beim Laden des Buchs ist ein Fehler aufgetreten. Bitte stellen Sie sicher, dass Sie angemeldet sind."
+            "Beim Laden des Buchs ist ein Fehler aufgetreten. Bitte vergewissere dich, dass du angemeldet bist."
           );
         }
 
@@ -136,7 +145,7 @@ function EditBook() {
         <h1>Buch anpassen</h1>
         <form className={styles.form} onSubmit={handleEditBook}>
           <div className={styles.inputRow}>
-            <label htmlFor="title">Buchtitel</label>
+            <label htmlFor="title">Buchtitel *</label>
             <input
               id="title"
               type="text"
@@ -154,7 +163,7 @@ function EditBook() {
             />
           </div>
           <div className={styles.inputRow}>
-            <label htmlFor="authors">Autor(en)</label>
+            <label htmlFor="authors">Autor(en) *</label>
             <input
               id="authors"
               type="text"

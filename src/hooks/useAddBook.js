@@ -18,28 +18,31 @@ export const useAddBook = () => {
 
     for (const pair of formData.entries()) {
       if (pair[0] === "title" && pair[1] === "") {
-        setError(["Bitte geben Sie einen Titel an."]);
+        setError(["Bitte gib einen Titel an."]);
         return { error };
       }
       if (pair[0] === "authors" && pair[1] === "") {
-        setError(["Bitte geben Sie mindestens einen Autor an"]);
+        setError(["Bitte gib mindestens einen Autor an."]);
         return { error };
       }
     }
 
     const response = await axios({
       method: "POST",
-      url: "http://localhost:5000/books/add",
+      url: `${import.meta.env.VITE_BACKEND_URL}/books/add`,
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${user.token}`,
       },
       data: formData,
-    }).catch(() => {
-      setTimeout(() => navigate("/login"), 3000);
-      setError([
-        "Die Session ist abgelaufen. Bitte melden Sie sich erneut an.",
-      ]);
+    }).catch((e) => {
+      console.log(e.response.data);
+      if (e.response.data.error.includes("Session")) {
+        setTimeout(() => navigate("/login"), 3000);
+        setError(["Die Session ist abgelaufen. Bitte melde dich erneut an."]);
+      } else {
+        setError([e.response.data]);
+      }
     });
 
     const returnedBook = await response.data;
@@ -53,7 +56,7 @@ export const useAddBook = () => {
       setIsLoading(false);
 
       setSuccess(
-        "Das Buch wurde erfolgreich angelegt. Sie werden in Kürze zu Ihrer Buch-Übersicht weitergeleitet."
+        "Das Buch wurde erfolgreich angelegt. Du wirst in Kürze zu deiner Buch-Übersicht weitergeleitet."
       );
 
       setTimeout(() => navigate("/books"), 2000);

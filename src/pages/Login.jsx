@@ -33,7 +33,7 @@ function Login() {
         <form className={styles.form} onSubmit={handleSubmit}>
           <h3 className={styles.loginHeading}>Login</h3>
           <div className={styles.inputRow}>
-            <label htmlFor="email">E-Mail</label>
+            <label htmlFor="email">E-Mail *</label>
             <input
               id="email"
               type="email"
@@ -42,7 +42,7 @@ function Login() {
             />
           </div>
           <div className={styles.inputRow}>
-            <label htmlFor="password">Passwort</label>
+            <label htmlFor="password">Passwort *</label>
             <input
               id="password"
               type="password"
@@ -73,7 +73,7 @@ function Login() {
               zurück
             </Button>
             <Button disabled={isLoading} type="primary">
-              {isLoading ? "Sie werden angemeldet" : "Anmelden"}
+              {isLoading ? "Du wirst angemeldet" : "Anmelden"}
             </Button>
           </div>
         </form>

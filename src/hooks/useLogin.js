@@ -14,13 +14,13 @@ export const useLogin = () => {
   const login = async (user) => {
     setIsLoading(true);
     setError(false);
-    if (!user.email) setError(["Bitte geben Sie eine E-Mail-Adresse an!"]);
-    if (!user.password) setError(["Bitte geben Sie ein Passwort an!"]);
+    if (!user.email) setError(["Bitte gib eine E-Mail-Adresse an."]);
+    if (!user.password) setError(["Bitte gib ein Passwort an."]);
 
     const response = await axios({
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      url: "http://localhost:5000/login",
+      url: `${import.meta.env.VITE_BACKEND_URL}/login`,
       data: user,
     });
 
@@ -40,7 +40,7 @@ export const useLogin = () => {
       setIsLoading(false);
 
       setSuccess(
-        "Sie wurden erfolgreich angemeldet. Sie werden in Kürze weitergeleitet."
+        "Du wurdest erfolgreich angemeldet. Du wirst in Kürze weitergeleitet."
       );
 
       setTimeout(() => navigate("/books"), 2000);

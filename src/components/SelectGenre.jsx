@@ -3,7 +3,7 @@ import { PropTypes } from "prop-types";
 import styles from "./SelectGenre.module.css";
 
 const genreArray = [
-  { id: 1, value: "None", option: "Bitte wählen Sie ein Genre aus" },
+  { id: 1, value: "None", option: "Bitte wähle ein Genre aus" },
   { id: 2, value: "Biografie", option: "Biografie" },
   { id: 3, value: "Entwicklungsroman", option: "Entwicklungsroman" },
   { id: 4, value: "Fachbuch", option: "Fachbuch" },

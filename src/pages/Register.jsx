@@ -37,7 +37,7 @@ function Register() {
         <form className={styles.form} onSubmit={handleSubmit}>
           <h3 className={styles.registerHeading}>Registrieren</h3>
           <div className={styles.inputRow}>
-            <label htmlFor="accessCode">Freigabe-Code</label>
+            <label htmlFor="accessCode">Freigabe-Code *</label>
             <input
               id="accessCode"
               type="accessCode"
@@ -46,7 +46,7 @@ function Register() {
             />
           </div>
           <div className={styles.inputRow}>
-            <label htmlFor="name">Benutzername</label>
+            <label htmlFor="name">Benutzername *</label>
             <input
               id="name"
               type="name"
@@ -55,7 +55,7 @@ function Register() {
             />
           </div>
           <div className={styles.inputRow}>
-            <label htmlFor="email">E-Mail</label>
+            <label htmlFor="email">E-Mail *</label>
             <input
               id="email"
               type="email"
@@ -64,7 +64,7 @@ function Register() {
             />
           </div>
           <div className={styles.inputRow}>
-            <label htmlFor="password">Passwort</label>
+            <label htmlFor="password">Passwort *</label>
             <input
               id="password"
               type="password"
@@ -95,7 +95,7 @@ function Register() {
               zurück
             </Button>
             <Button disabled={isLoading} type="primary">
-              {isLoading ? "Sie werden registriert" : "Registrieren"}
+              {isLoading ? "Du wirst registriert" : "Registrieren"}
             </Button>
           </div>
         </form>

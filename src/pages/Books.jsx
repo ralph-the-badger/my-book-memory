@@ -23,21 +23,25 @@ function Books() {
 
         const res = await axios({
           method: "get",
-          url: "http://localhost:5000/books",
+          url: `${import.meta.env.VITE_BACKEND_URL}/books`,
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
           },
-        }).catch(() => {
-          setTimeout(() => navigate("/login"), 3000);
-          throw new Error(
-            "Die Session ist abgelaufen. Bitte melden Sie sich erneut an."
-          );
+        }).catch((e) => {
+          if (e.response.data.error.includes("Session")) {
+            setTimeout(() => navigate("/login"), 3000);
+            setError([
+              "Die Session ist abgelaufen. Bitte melde dich erneut an. Du wirst in Kürze zum Login weitergeleitet.",
+            ]);
+          } else {
+            setError([e.response.data]);
+          }
         });
 
         if (!res || res.status !== 200) {
           throw new Error(
-            "Beim Laden der Bücher ist ein Fehler aufgetreten. Bitte stellen Sie sicher, dass Sie angemeldet sind."
+            "Beim Laden der Bücher ist ein Fehler aufgetreten. Bitte vergewissere dich, dass du angemeldet bist."
           );
         }
         if (res.status === 200) {

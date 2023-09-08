@@ -19,19 +19,23 @@ export const useEditBook = () => {
     setIsLoading(true);
     setError(false);
 
+    console.log("BOOK: " + book.bookId);
+
     const response = await axios({
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${user.token}`,
       },
-      url: `http://localhost:5000/books/edit`,
+      url: `${import.meta.env.VITE_BACKEND_URL}/books/edit`,
       data: book,
-    }).catch(() => {
-      setTimeout(() => navigate("/login"), 3000);
-      setError([
-        "Die Session ist abgelaufen. Bitte melden Sie sich erneut an.",
-      ]);
+    }).catch((e) => {
+      if (e.response.data.error.includes("Session")) {
+        setTimeout(() => navigate("/login"), 3000);
+        setError(["Die Session ist abgelaufen. Bitte melde dich erneut an."]);
+      } else {
+        setError([e.response.data]);
+      }
     });
 
     const editedBook = await response.data;
@@ -45,7 +49,7 @@ export const useEditBook = () => {
       setIsLoading(false);
 
       setSuccess(
-        "Das Buch wurde erfolgreich angepasst. Sie werden in Kürze zu Ihrem Buch weitergeleitet."
+        "Das Buch wurde erfolgreich angepasst. Du wirst in Kürze zu deinem Buch weitergeleitet."
       );
 
       setTimeout(() => navigate(`/books/${id}`), 2000);

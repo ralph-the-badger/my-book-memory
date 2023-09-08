@@ -70,7 +70,7 @@ function AddBook() {
         <h1>Buch hinzufügen</h1>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.inputRow}>
-            <label htmlFor="title">Buchtitel</label>
+            <label htmlFor="title">Buchtitel *</label>
             <input
               id="title"
               type="text"
@@ -88,7 +88,7 @@ function AddBook() {
             />
           </div>
           <div className={styles.inputRow}>
-            <label htmlFor="authors">Autor(en)</label>
+            <label htmlFor="authors">Autor(en) *</label>
             <input
               id="authors"
               type="text"
