@@ -30,8 +30,12 @@ export const useEditBook = () => {
       url: `${import.meta.env.VITE_BACKEND_URL}/books/edit`,
       data: book,
     }).catch((e) => {
+      console.log(e.response.data);
       if (e.response.data.error.includes("Session")) {
-        setTimeout(() => navigate("/login"), 3000);
+        setTimeout(() => {
+          navigate("/login");
+          localStorage.removeItem("userData");
+        }, 3000);
         setError(["Die Session ist abgelaufen. Bitte melde dich erneut an."]);
       } else {
         setError([e.response.data]);

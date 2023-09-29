@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 .env
+package-lock.json
+ionos
+public/images
 
 # Editor directories and files
 .vscode/*
